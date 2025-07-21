@@ -1,6 +1,6 @@
 {
-  "name": "harrygulliford/laravel-firebird",
-  "description": "Firebird database driver for the Laravel Framework",
+  "name": "michalkortas/laravel-firebird",
+  "description": "Firebird database driver for the Laravel Framework - temporary FORK from https://github.com/fetzi/laravel-firebird/tree/4.x",
   "license": "MIT",
   "require": {
     "php": "^7.4|^8.0",
