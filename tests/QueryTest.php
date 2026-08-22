@@ -1282,4 +1282,12 @@ class QueryTest extends TestCase
 
         $this->assertEquals($firstNumber * $secondNumber, $result);
     }
+
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function procedure_values_are_explicitly_nullable_on_php_84()
+    {
+        $grammar = file_get_contents(__DIR__.'/../src/Query/Grammars/FirebirdGrammar.php');
+
+        $this->assertStringContainsString('?array $values = null', $grammar);
+    }
 }
