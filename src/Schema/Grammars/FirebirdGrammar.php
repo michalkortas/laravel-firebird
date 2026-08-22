@@ -27,7 +27,7 @@ class FirebirdGrammar extends Grammar
      *
      * @return string
      */
-    public function compileTables()
+    public function compileTables($schema)
     {
         return 'select trim(trailing from rdb$relation_name) as "name" '
             .'from rdb$relations '
@@ -41,9 +41,13 @@ class FirebirdGrammar extends Grammar
      *
      * @return string
      */
-    public function compileTableExists()
+    public function compileTableExists($schema, $table)
     {
-        return 'select rdb$relation_name from rdb$relations where rdb$relation_name = ?';
+        return sprintf(
+            'select count(*) as "exists" from rdb$relations where rdb$relation_name = %s and rdb$relation_type = 0 and '
+            .'(rdb$system_flag is null or rdb$system_flag = 0)',
+            $this->quoteString($table),
+        );
     }
 
     /**
@@ -51,7 +55,7 @@ class FirebirdGrammar extends Grammar
      *
      * @return string
      */
-    public function compileViews()
+    public function compileViews($schema)
     {
         return 'select trim(trailing from rdb$relation_name) as "name", '
         .'rdb$view_source as "definition" '
@@ -66,12 +70,12 @@ class FirebirdGrammar extends Grammar
      * @param  string  $table
      * @return string
      */
-    public function compileColumns($table)
+    public function compileColumns($schema, $table)
     {
         return 'select trim(trailing from rdb$field_name) as "name" '
             .'from rdb$relation_fields '
             .'where rdb$relation_name = '.$this->quoteString($table).' '
-            .'order by rdb$relation_name';
+            .'order by rdb$field_position';
     }
 
     /**
@@ -126,13 +130,11 @@ class FirebirdGrammar extends Grammar
      */
     public function compileDropIfExists(Blueprint $blueprint, Fluent $command)
     {
-        // Replace the double quotes with single quotes.
-        $table = str_replace('"', "'", $this->wrapTable($blueprint));
-
         return sprintf(
-            "execute block as begin if (exists(%s)) then execute statement '%s'; end",
-            str_replace('?', $table, $this->compileTableExists()), // Replace the ? character with the table name.
-            $this->compileDrop($blueprint, $command)
+            'execute block as begin if (exists(select 1 from rdb$relations where rdb$relation_name = %s and rdb$relation_type = 0 and '
+            .'(rdb$system_flag is null or rdb$system_flag = 0))) then execute statement \'drop table %s\'; end',
+            $this->quoteString($blueprint->getTable()),
+            $this->wrapTable($blueprint)
         );
     }
 

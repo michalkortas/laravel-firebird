@@ -8,9 +8,31 @@ use HarryGulliford\Firebird\Query\Processors\FirebirdProcessor as FirebirdQueryP
 use HarryGulliford\Firebird\Schema\Builder as FirebirdSchemaBuilder;
 use HarryGulliford\Firebird\Schema\Grammars\FirebirdGrammar as FirebirdSchemaGrammar;
 use Illuminate\Database\Connection as DatabaseConnection;
+use Illuminate\Support\Str;
+use PDO;
 
 class FirebirdConnection extends DatabaseConnection
 {
+    /**
+     * Get the database driver's title.
+     *
+     * @return string
+     */
+    public function getDriverTitle()
+    {
+        return 'Firebird';
+    }
+
+    /**
+     * Get the server version for the connection.
+     */
+    public function getServerVersion(): string
+    {
+        $version = $this->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+        return Str::match('/(?:V|version\s+)(\d+\.\d+(?:\.\d+)?)/i', $version) ?: $version;
+    }
+
     /**
      * Get the default query grammar instance.
      *
@@ -52,7 +74,7 @@ class FirebirdConnection extends DatabaseConnection
      */
     protected function getDefaultSchemaGrammar()
     {
-        return $this->withTablePrefix(new FirebirdSchemaGrammar($this));
+        return new FirebirdSchemaGrammar($this);
     }
 
     /**
@@ -74,8 +96,8 @@ class FirebirdConnection extends DatabaseConnection
      * @param  array  $values
      * @return \Illuminate\Support\Collection
      */
-    public function executeProcedure($procedure, array $values = [])
+    public function executeProcedure(string $procedure, array $values = [])
     {
-        return $this->query()->fromProcedure($procedure, $values)->get();
+        return $this->query()->procedure($procedure, $values)->get();
     }
 }

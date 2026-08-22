@@ -11,21 +11,31 @@ class SchemaTest extends TestCase
 {
     use MigrateDatabase;
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function table_exists_query_uses_firebird_2_5_compatible_sql()
+    {
+        DB::connection()->getSchemaBuilder();
+        $sql = DB::connection()->getSchemaGrammar()->compileTableExists(null, 'users');
+
+        $this->assertStringContainsString('select count(*)', strtolower($sql));
+        $this->assertStringNotContainsString('select exists', strtolower($sql));
+    }
+
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_table()
     {
         $this->assertTrue(Schema::hasTable('users'));
         $this->assertFalse(Schema::hasTable('foo'));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_column()
     {
         $this->assertTrue(Schema::hasColumn('users', 'id'));
         $this->assertFalse(Schema::hasColumn('users', 'foo'));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_view(): void
     {
         if (version_compare($this->app->version(), '10.34.0', '<')) {
@@ -39,14 +49,14 @@ class SchemaTest extends TestCase
         $this->assertFalse(Schema::hasView(uniqid('view_')));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_columns()
     {
         $this->assertTrue(Schema::hasColumns('users', ['id', 'country']));
         $this->assertFalse(Schema::hasColumns('users', ['id', 'foo']));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_create_a_table()
     {
         Schema::dropIfExists('foo');
@@ -63,7 +73,7 @@ class SchemaTest extends TestCase
         Schema::drop('foo');
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_throws_an_exception_for_creating_temporary_tables()
     {
         Schema::dropIfExists('foo');
@@ -82,7 +92,7 @@ class SchemaTest extends TestCase
         $this->assertFalse(Schema::hasTable('foo'));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_drop_table()
     {
         DB::select('RECREATE TABLE "foo" ("id" INTEGER NOT NULL)');
@@ -94,7 +104,7 @@ class SchemaTest extends TestCase
         $this->assertFalse(Schema::hasTable('foo'));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_drop_table_if_exists()
     {
         DB::select('RECREATE TABLE "foo" ("id" INTEGER NOT NULL)');

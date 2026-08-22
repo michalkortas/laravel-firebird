@@ -1,19 +1,19 @@
 {
   "name": "michalkortas/laravel-firebird",
-  "description": "Firebird database driver for the Laravel Framework - temporary FORK from https://github.com/fetzi/laravel-firebird/tree/4.x",
+  "description": "Firebird database driver for Laravel 12 and 13 with legacy Firebird support",
   "license": "MIT",
   "require": {
-    "php": "^7.4|^8.0",
-    "illuminate/support": "^8.65|^9.33|^10.0|^11.0|^12.0",
-    "illuminate/container": "^8.65|^9.33|^10.0|^11.0|^12.0",
-    "illuminate/database": "^8.65|^9.33|^10.0|^11.0|^12.0",
-    "illuminate/events": "^8.65|^9.33|^10.0|^11.0|^12.0"
+    "php": "^8.2",
+    "illuminate/support": "^12.17|^13.0",
+    "illuminate/container": "^12.17|^13.0",
+    "illuminate/database": "^12.17|^13.0",
+    "illuminate/events": "^12.17|^13.0"
   },
   "require-dev": {
-    "mockery/mockery": "^1.4",
-    "phpunit/phpunit": "^9.6.11|^10.0|^11.0",
-    "orchestra/testbench": "^6.19|^7.0|^8.0|^9.0|^10.0",
-    "fakerphp/faker": "^1.15"
+    "mockery/mockery": "^1.6",
+    "phpunit/phpunit": "^11.5|^12.0",
+    "orchestra/testbench": "^10.3|^11.0",
+    "fakerphp/faker": "^1.24"
   },
   "archive": {
     "exclude": [

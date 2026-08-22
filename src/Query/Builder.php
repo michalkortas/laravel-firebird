@@ -17,6 +17,22 @@ class Builder extends QueryBuilder
     }
 
     /**
+     * Set the stored procedure which the query is targeting.
+     *
+     * @param  string  $procedure
+     * @param  array  $values
+     * @return \Illuminate\Database\Query\Builder|static
+     */
+    public function procedure(string $procedure, array $values = [])
+    {
+        $compiledProcedure = $this->grammar->compileProcedure($this, $procedure, $values);
+
+        $this->fromRaw($compiledProcedure, $this->cleanBindings($values));
+
+        return $this;
+    }
+
+    /**
      * Add a from stored procedure clause to the query builder.
      *
      * @param  string  $procedure
@@ -25,16 +41,6 @@ class Builder extends QueryBuilder
      */
     public function fromProcedure(string $procedure, array $values = [])
     {
-        $compiledProcedure = $this->grammar->compileProcedure($this, $procedure, $values);
-
-        // Remove any expressions from the values array, as they will have
-        // already been evaluated by the grammar's parameterize() function.
-        $values = array_filter($values, function ($value) {
-            return ! $this->grammar->isExpression($value);
-        });
-
-        $this->fromRaw($compiledProcedure, array_values($values));
-
-        return $this;
+        return $this->procedure($procedure, $values);
     }
 }

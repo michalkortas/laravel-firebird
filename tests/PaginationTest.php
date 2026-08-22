@@ -10,7 +10,7 @@ class PaginationTest extends TestCase
 {
     use MigrateDatabase;
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_paginate_results()
     {
         Order::factory()->count(10)->create(['price' => 50]);
@@ -26,7 +26,7 @@ class PaginationTest extends TestCase
         $this->assertTrue($paginator->hasMorePages());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_simple_paginate_results()
     {
         Order::factory()->count(10)->create(['price' => 50]);
@@ -40,7 +40,7 @@ class PaginationTest extends TestCase
         $this->assertTrue($paginator->hasMorePages());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_cursor_paginate_results()
     {
         Order::factory()->count(10)->create(['price' => 50]);

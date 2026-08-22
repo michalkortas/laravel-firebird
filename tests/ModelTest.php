@@ -10,7 +10,7 @@ class ModelTest extends TestCase
 {
     use MigrateDatabase;
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_create_a_record()
     {
         User::create($fields = [

@@ -13,13 +13,13 @@ class QueryTest extends TestCase
 {
     use MigrateDatabase;
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_has_the_correct_connection()
     {
         $this->assertEquals('firebird', DB::getDefaultConnection());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_get()
     {
         Order::factory()->count(3)->create();
@@ -39,7 +39,7 @@ class QueryTest extends TestCase
         $this->assertIsArray($orders->toArray());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_select()
     {
         User::factory()->create([
@@ -63,7 +63,7 @@ class QueryTest extends TestCase
         $this->assertEquals('Australia', $result->country);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_select_with_aliases()
     {
         User::factory()->create([
@@ -91,7 +91,7 @@ class QueryTest extends TestCase
         $this->assertEquals('Australia', $result->User_Country);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_select_distinct()
     {
         Order::factory()->count(1)->create(['price' => 10]);
@@ -103,7 +103,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_with_results()
     {
         User::factory()->count(5)->create(['name' => 'Frank']);
@@ -119,7 +119,7 @@ class QueryTest extends TestCase
         $this->assertEquals('Frank', $results->random()->name);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_without_results()
     {
         User::factory()->count(25)->create();
@@ -134,7 +134,7 @@ class QueryTest extends TestCase
         $this->assertNull($results->first());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_gt()
     {
         Order::factory()
@@ -158,7 +158,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_gte()
     {
         Order::factory()
@@ -182,7 +182,7 @@ class QueryTest extends TestCase
         $this->assertCount(4, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_lt()
     {
         Order::factory()
@@ -206,7 +206,7 @@ class QueryTest extends TestCase
         $this->assertCount(4, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_lte()
     {
         Order::factory()
@@ -230,7 +230,7 @@ class QueryTest extends TestCase
         $this->assertCount(5, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_equal()
     {
         Order::factory()
@@ -260,7 +260,7 @@ class QueryTest extends TestCase
         $this->assertCount(7, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_like()
     {
         // "Like" is case-sensitive. For case-insensitive, use "containing".
@@ -284,7 +284,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_like()
     {
         Order::factory()->create(['name' => 'Pants Small']);
@@ -300,7 +300,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_array()
     {
         Order::factory()->create(['name' => 'Pants Small', 'price' => 60]);
@@ -320,7 +320,7 @@ class QueryTest extends TestCase
         $this->assertCount(1, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_or_where()
     {
         Order::factory()
@@ -345,7 +345,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_grouped_or_where()
     {
         Order::factory()->count(2)->create(['price' => 100]);
@@ -363,7 +363,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_in()
     {
         Order::factory()->count(1)->create(['price' => 75]);
@@ -377,7 +377,7 @@ class QueryTest extends TestCase
         $this->assertCount(8, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_in_exceeds_firebird_2_limit()
     {
         Order::factory()
@@ -392,7 +392,7 @@ class QueryTest extends TestCase
         $this->assertEquals(1505, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_in()
     {
         Order::factory()->count(1)->create(['price' => 75]);
@@ -406,7 +406,7 @@ class QueryTest extends TestCase
         $this->assertCount(1, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_between()
     {
         Order::factory()->create(['price' => 10]);
@@ -422,7 +422,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_between()
     {
         Order::factory()->create(['price' => 10]);
@@ -438,7 +438,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_null()
     {
         Order::factory()->count(10)->create();
@@ -450,7 +450,7 @@ class QueryTest extends TestCase
         $this->assertCount(10, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_null()
     {
         Order::factory()->count(10)->create();
@@ -462,7 +462,7 @@ class QueryTest extends TestCase
         $this->assertCount(10, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_date()
     {
         $this->markTestSkipped('The necessary grammar for whereDate() has not been implemented.');
@@ -474,7 +474,7 @@ class QueryTest extends TestCase
         $this->assertCount(10, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_time()
     {
         $this->markTestSkipped('The necessary grammar for whereTime() has not been implemented.');
@@ -486,7 +486,7 @@ class QueryTest extends TestCase
         $this->assertCount(10, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_day()
     {
         Order::factory()->count(3)->create(['created_at' => now()]);
@@ -499,7 +499,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_month()
     {
         Order::factory()->count(3)->create(['created_at' => now()]);
@@ -512,7 +512,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_year()
     {
         Order::factory()->count(3)->create(['created_at' => now()]);
@@ -525,7 +525,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_containing()
     {
         // "Containing" is a case-insensitive alternative to "like". Also, the
@@ -550,7 +550,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_containing()
     {
         // "Containing" is a case-insensitive alternative to "like". Also, the
@@ -575,7 +575,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_starting_with()
     {
         Order::factory()->create(['name' => 'Pants Small']);
@@ -597,7 +597,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_starting_with()
     {
         Order::factory()->create(['name' => 'Pants Small']);
@@ -619,7 +619,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_similar_to()
     {
         Order::factory()->create(['name' => 'Pants Small']);
@@ -641,7 +641,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_not_similar_to()
     {
         Order::factory()->create(['name' => 'Pants Small']);
@@ -663,7 +663,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_is_distinct_from()
     {
         User::factory()->create(['state' => null]);
@@ -683,7 +683,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_is_not_distinct_from()
     {
         User::factory()->create(['state' => null]);
@@ -703,7 +703,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_where_exists()
     {
         Order::factory()->count(2)->create(['price' => 120]);
@@ -721,7 +721,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_filter_subquery_where()
     {
         Order::factory()->count(2)->create(['price' => 100]);
@@ -740,7 +740,7 @@ class QueryTest extends TestCase
         $this->assertCount(2, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_order_by_asc()
     {
         Order::factory()->create(['price' => 100]);
@@ -753,7 +753,7 @@ class QueryTest extends TestCase
         $this->assertEquals(300, $results->last()->price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_order_by_desc()
     {
         Order::factory()->create(['price' => 100]);
@@ -766,7 +766,7 @@ class QueryTest extends TestCase
         $this->assertEquals(100, $results->last()->price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_order_latest()
     {
         Order::factory()->create(['price' => 100, 'created_at' => now()]);
@@ -779,7 +779,7 @@ class QueryTest extends TestCase
         $this->assertEquals(300, $results->last()->price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_order_oldest()
     {
         Order::factory()->create(['price' => 100, 'created_at' => now()]);
@@ -792,7 +792,7 @@ class QueryTest extends TestCase
         $this->assertEquals(100, $results->last()->price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_return_random_order()
     {
         User::factory()->count(25)->create();
@@ -806,7 +806,7 @@ class QueryTest extends TestCase
         $this->assertNotEquals($resultsB, $resultsC);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_remove_existing_orderings()
     {
         Order::factory()->count(10)->create();
@@ -824,7 +824,7 @@ class QueryTest extends TestCase
         $this->assertEquals(10, $results->last()->id);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_pluck()
     {
         Order::factory()->count(10)->create();
@@ -837,7 +837,7 @@ class QueryTest extends TestCase
         }
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_count()
     {
         Order::factory()->count(10)->create();
@@ -847,7 +847,7 @@ class QueryTest extends TestCase
         $this->assertEquals(10, $count);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_aggregate_max()
     {
         Order::factory()
@@ -866,7 +866,7 @@ class QueryTest extends TestCase
         $this->assertEquals(92, $price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_aggregate_min()
     {
         Order::factory()
@@ -885,7 +885,7 @@ class QueryTest extends TestCase
         $this->assertEquals(12, $price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_aggregate_average()
     {
         Order::factory()
@@ -904,7 +904,7 @@ class QueryTest extends TestCase
         $this->assertEquals((int) 52.6, $price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_aggregate_sum()
     {
         Order::factory()
@@ -923,7 +923,7 @@ class QueryTest extends TestCase
         $this->assertEquals(263, $price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_check_exists()
     {
         User::factory()->create();
@@ -932,7 +932,7 @@ class QueryTest extends TestCase
         $this->assertFalse(DB::table('users')->where('id', null)->exists());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_execute_raw_expressions()
     {
         Order::factory()
@@ -958,7 +958,7 @@ class QueryTest extends TestCase
         $this->assertEquals(3, $results->where('price', 90)->first()->price_count);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_execute_raw_select_containing_arithmetic()
     {
         if ($this->getDatabaseEngineVersion() >= 4.0) {
@@ -984,7 +984,7 @@ class QueryTest extends TestCase
         }
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_execute_raw_select_containing_sum()
     {
         Order::factory()
@@ -1004,7 +1004,7 @@ class QueryTest extends TestCase
         $this->assertEquals(210, $result->price);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_execute_raw_where()
     {
         User::factory()->count(3)->create();
@@ -1017,7 +1017,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_execute_raw_order_by()
     {
         Order::factory()
@@ -1040,7 +1040,7 @@ class QueryTest extends TestCase
         $this->assertEquals(90, $min);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_add_inner_join()
     {
         Order::factory()->count(10)->create();
@@ -1057,7 +1057,7 @@ class QueryTest extends TestCase
         $this->assertObjectHasProperty('quantity', $results->first());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_add_inner_join_where()
     {
         Order::factory()->count(2)->create(['price' => 100]);
@@ -1080,7 +1080,7 @@ class QueryTest extends TestCase
         $this->assertObjectHasProperty('quantity', $results->first());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_add_left_join()
     {
         Order::factory()->count(2)->create(['price' => 100]);
@@ -1098,7 +1098,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $results->whereNull('email'));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_add_right_join()
     {
         Order::factory()->count(2)->create(['price' => 100]);
@@ -1116,7 +1116,7 @@ class QueryTest extends TestCase
         $this->assertCount(0, $results->whereNull('email'));
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_add_subquery_join()
     {
         Order::factory()->create();
@@ -1133,7 +1133,7 @@ class QueryTest extends TestCase
         $this->assertNotNull($user->last_order_created_at);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_union_queries()
     {
         Order::factory()
@@ -1158,7 +1158,7 @@ class QueryTest extends TestCase
         $this->assertCount(3, $orders);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_group_having()
     {
         User::factory()->count(5)->create(['country' => 'Australia']);
@@ -1177,7 +1177,7 @@ class QueryTest extends TestCase
         $this->assertEquals(3, $results['New Zealand']);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_group_having_raw()
     {
         User::factory()->count(5)->create(['country' => 'Australia']);
@@ -1196,7 +1196,7 @@ class QueryTest extends TestCase
         $this->assertEquals(3, $results['New Zealand']);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_offset_results()
     {
         User::factory()->count(10)->create();
@@ -1210,10 +1210,18 @@ class QueryTest extends TestCase
         $this->assertEquals(10, $results->last()->id);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_offset_and_limit_results()
     {
         User::factory()->count(10)->create();
+
+        $sql = DB::table('users')
+            ->offset(3)
+            ->limit(3)
+            ->toSql();
+
+        $this->assertStringContainsString('select first 3 skip 3', strtolower($sql));
+        $this->assertStringNotContainsString('fetch first', strtolower($sql));
 
         $results = DB::table('users')
             ->offset(3)
@@ -1225,7 +1233,7 @@ class QueryTest extends TestCase
         $this->assertEquals(6, $results->last()->id);
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_limit_results()
     {
         User::factory()->count(10)->create();
@@ -1239,7 +1247,7 @@ class QueryTest extends TestCase
         $this->assertEquals(3, $results->last()->id);
     }
 
-    // /** @test */
+    // #[\PHPUnit\Framework\Attributes\Test]
     // public function it_can_insert_returning_id()
     // {
     //     $id = DB::table('users')
@@ -1252,7 +1260,7 @@ class QueryTest extends TestCase
     //     dd($id);
     // }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_can_execute_stored_procedures()
     {
         $firstNumber = random_int(1, 10);
@@ -1262,6 +1270,13 @@ class QueryTest extends TestCase
             ->fromProcedure('MULTIPLY', [
                 $firstNumber, $secondNumber,
             ])
+            ->first()
+            ->RESULT;
+
+        $this->assertEquals($firstNumber * $secondNumber, $result);
+
+        $result = DB::query()
+            ->procedure('MULTIPLY', [$firstNumber, $secondNumber])
             ->first()
             ->RESULT;
 

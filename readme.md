@@ -1,24 +1,25 @@
 # Firebird for Laravel
 
-[![Latest Stable Version](https://poser.pugx.org/harrygulliford/laravel-firebird/v/stable)](https://packagist.org/packages/harrygulliford/laravel-firebird)
-[![Total Downloads](https://poser.pugx.org/harrygulliford/laravel-firebird/downloads)](https://packagist.org/packages/harrygulliford/laravel-firebird)
-[![Tests](https://github.com/harrygulliford/laravel-firebird/actions/workflows/tests.yml/badge.svg)](https://github.com/harrygulliford/laravel-firebird/actions/workflows/tests.yml)
-[![License](https://poser.pugx.org/harrygulliford/laravel-firebird/license)](https://packagist.org/packages/harrygulliford/laravel-firebird)
+[![Latest Stable Version](https://poser.pugx.org/michalkortas/laravel-firebird/v/stable)](https://packagist.org/packages/michalkortas/laravel-firebird)
+[![Tests](https://github.com/michalkortas/laravel-firebird/actions/workflows/tests.yml/badge.svg?branch=5.x)](https://github.com/michalkortas/laravel-firebird/actions/workflows/tests.yml)
 
 This package adds support for the Firebird PDO Database Driver in Laravel applications.
 
 ## Version Support
 
-- **PHP:** 7.4, 8.0, 8.1, 8.2, 8.3
-- **Laravel:** 8.x, 9.x, 10.x, 11.x
-- **Firebird:** 2.5, 3.0, 4.0
+- **PHP:** 8.2, 8.3, 8.4
+- **Laravel:** 12.x, 13.x
+- **Firebird:** 2.5 and newer
+
+The 5.x line deliberately retains the `FIRST` / `SKIP` query syntax required by
+Firebird 2.5. Applications on older Laravel versions should stay on the 4.x line.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require harrygulliford/laravel-firebird
+composer require michalkortas/laravel-firebird:^5.0
 ```
 
 _The package will automatically register itself._
